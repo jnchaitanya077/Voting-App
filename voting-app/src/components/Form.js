@@ -1,15 +1,15 @@
 import React from 'react';
 
-function Login(props) {
+function Login({ path, name }) {
     return (
         <div class="container mt-5">
-            <h1>Login</h1>
+            <h1>{name}</h1>
             <div class="row">
                 <div class="col-sm-8">
                     <div class="card">
                         <div class="card-body">
 
-                            <form action="/login" method="POST">
+                            <form action={`http://localhost:9000${path}`} method="POST">
                                 <div class="form-group">
                                     <label for="email">Email</label>
                                     <input type="email" class="form-control" name="username" />
@@ -18,7 +18,7 @@ function Login(props) {
                                     <label for="password">Password</label>
                                     <input type="password" class="form-control" name="password" />
                                 </div>
-                                <button type="submit" class="btn btn-dark">Login</button>
+                                <button type="submit" class="btn btn-dark">{name}</button>
                             </form>
 
                         </div>
