@@ -19,6 +19,7 @@ function CandidateCard({ name, image, id, email }) {
         }
 
         const res = await axios.post(`${BASE_URI}/vote`, candidateId, { headers })
+
         alert(res.data.msg)
         history.push("/")
     }
