@@ -1,14 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const encrypt = require('mongoose-encryption');
-// const cors = require('cors')
+const cors = require('cors')
 require('dotenv').config()
 
 
 const port = process.env.PORT || 9000;
 
 const app = express();
-// app.use(cors())
+app.use(cors())
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -37,6 +37,11 @@ const candidatesSchema = new mongoose.Schema({
 
 const User = mongoose.model("user", userSchema);
 const Candidate = mongoose.model("candidate", candidatesSchema);
+
+
+app.get("/", (req, res) => {
+    res.send("Server is up and running");
+})
 
 app.post("/login", (req, res) => {
     const username = req.body.email;
