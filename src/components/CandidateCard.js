@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
 function CandidateCard({ name, image, id, email }) {
+    const BASE_URI = "https://voting-web-app-server.herokuapp.com"
+
     const history = useHistory();
     console.log(email);
     const candidateId = {
@@ -15,7 +17,7 @@ function CandidateCard({ name, image, id, email }) {
         const headers = {
             'Content-Type': 'application/json'
         }
-        const res = await axios.post("http://localhost:9000/vote", candidateId, { headers })
+        const res = await axios.post(`${BASE_URI}/vote`, candidateId, { headers })
 
         alert(res.data.msg)
         history.push("/")

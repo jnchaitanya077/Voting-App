@@ -10,6 +10,7 @@ function AdminDisplay(props) {
 
     const [flag, setFlag] = useState(false);
     const [users, setusers] = useState([]);
+    const BASE_URI = "https://voting-web-app-server.herokuapp.com"
 
 
     useEffect(() => {
@@ -22,7 +23,7 @@ function AdminDisplay(props) {
         }
 
         // fetch the candidates
-        axios.get("http://localhost:9000/fetchCandidates")
+        axios.get(`${BASE_URI}/fetchCandidates`)
             .then(res => setusers(res.data))
             .catch(e => console.log(e))
 

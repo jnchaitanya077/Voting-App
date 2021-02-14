@@ -7,6 +7,8 @@ import axios from 'axios';
 function VotingDisplay(props) {
     const location = useLocation();
     const history = useHistory();
+    const BASE_URI = "https://voting-web-app-server.herokuapp.com"
+
 
     const [flag, setFlag] = useState(false);
     const [users, setusers] = useState([]);
@@ -27,7 +29,7 @@ function VotingDisplay(props) {
         }
 
         // fetch the candidates
-        axios.get("http://localhost:9000/fetchCandidates")
+        axios.get(`${BASE_URI}/fetchCandidates`)
             .then(res => setusers(res.data))
             .catch(e => console.log(e))
 

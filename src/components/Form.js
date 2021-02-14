@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom';
 function Login({ path, name }) {
     console.log(path);
     const history = useHistory();
+    const BASE_URI = "https://voting-web-app-server.herokuapp.com"
+
     function handleSubmit(event) {
         event.preventDefault()
 
@@ -16,7 +18,7 @@ function Login({ path, name }) {
             'Content-Type': 'application/json'
         }
 
-        const response = axios.post(`http://localhost:9000${path}`, userDetails, { headers })
+        const response = axios.post(`${BASE_URI}${path}`, userDetails, { headers })
             .then(function (resp) {
                 console.log(typeof resp.data.status)
                 if (path === '/login') {
