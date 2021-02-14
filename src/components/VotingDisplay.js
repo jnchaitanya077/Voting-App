@@ -5,32 +5,32 @@ import axios from 'axios';
 
 
 function VotingDisplay(props) {
-    const location = useLocation();
-    const history = useHistory();
-    const BASE_URI = "https://voting-web-app-server.herokuapp.com"
-
 
     const [flag, setFlag] = useState(false);
-    const [users, setusers] = useState([]);
+    const [users, setUsers] = useState([]);
     const [userEmail, setEmail] = useState("");
+
+    const location = useLocation();
+    const history = useHistory();
+
+    const BASE_URI = "https://voting-web-app-server.herokuapp.com"
 
 
     useEffect(() => {
         const state = location.state;
+        // if state is present then only display Candidates list
         if (state) {
             const email = state.email;
-
-            console.log("email:" + email)
             setFlag(true)
             setEmail(email);
-            console.log(email)
         } else {
+            // redirect to homepage
             history.push("/")
         }
 
-        // fetch the candidates
+        // fetch the candidates from DB
         axios.get(`${BASE_URI}/fetchCandidates`)
-            .then(res => setusers(res.data))
+            .then(res => setUsers(res.data))
             .catch(e => console.log(e))
 
     }, [])
@@ -59,31 +59,31 @@ function VotingDisplay(props) {
 
 export default VotingDisplay;
 
-const candidates = [
-    {
-        name: "Srinivas",
-        image: "https://cdn.icon-icons.com/icons2/1736/PNG/512/4043260-avatar-male-man-portrait_113269.png",
-        votes: 0
+// const candidates = [
+//     {
+//         name: "Srinivas",
+//         image: "https://cdn.icon-icons.com/icons2/1736/PNG/512/4043260-avatar-male-man-portrait_113269.png",
+//         votes: 0
 
-    },
-    {
-        name: "Basha",
-        image: "https://cdn.icon-icons.com/icons2/1736/PNG/512/4043260-avatar-male-man-portrait_113269.png",
-        votes: 0
-    },
-    {
-        name: "Akhil",
-        image: "https://cdn.icon-icons.com/icons2/1736/PNG/512/4043260-avatar-male-man-portrait_113269.png",
-        votes: 0
-    },
-    {
-        name: "Chaitanya",
-        image: "https://cdn.icon-icons.com/icons2/1736/PNG/512/4043260-avatar-male-man-portrait_113269.png",
-        votes: 0
-    }, {
-        name: "Sai Teja",
-        image: "https://cdn.icon-icons.com/icons2/1736/PNG/512/4043260-avatar-male-man-portrait_113269.png",
-        votes: 0
-    },
+//     },
+//     {
+//         name: "Basha",
+//         image: "https://cdn.icon-icons.com/icons2/1736/PNG/512/4043260-avatar-male-man-portrait_113269.png",
+//         votes: 0
+//     },
+//     {
+//         name: "Akhil",
+//         image: "https://cdn.icon-icons.com/icons2/1736/PNG/512/4043260-avatar-male-man-portrait_113269.png",
+//         votes: 0
+//     },
+//     {
+//         name: "Chaitanya",
+//         image: "https://cdn.icon-icons.com/icons2/1736/PNG/512/4043260-avatar-male-man-portrait_113269.png",
+//         votes: 0
+//     }, {
+//         name: "Sai Teja",
+//         image: "https://cdn.icon-icons.com/icons2/1736/PNG/512/4043260-avatar-male-man-portrait_113269.png",
+//         votes: 0
+//     },
 
-]
+// ]

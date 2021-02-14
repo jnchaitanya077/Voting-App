@@ -17,8 +17,8 @@ function CandidateCard({ name, image, id, email }) {
         const headers = {
             'Content-Type': 'application/json'
         }
-        const res = await axios.post(`${BASE_URI}/vote`, candidateId, { headers })
 
+        const res = await axios.post(`${BASE_URI}/vote`, candidateId, { headers })
         alert(res.data.msg)
         history.push("/")
     }

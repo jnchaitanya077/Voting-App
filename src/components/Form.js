@@ -2,11 +2,11 @@ import React from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 function Login({ path, name }) {
-    console.log(path);
+
     const history = useHistory();
     const BASE_URI = "https://voting-web-app-server.herokuapp.com"
 
-    function handleSubmit(event) {
+    const handleSubmit = async (event) => {
         event.preventDefault()
 
         let userDetails = {
@@ -18,46 +18,55 @@ function Login({ path, name }) {
             'Content-Type': 'application/json'
         }
 
-        const response = axios.post(`${BASE_URI}${path}`, userDetails, { headers })
-            .then(function (resp) {
-                console.log(typeof resp.data.status)
-                if (path === '/login') {
-                    // check user password and username
-                    if (resp.data.status == 200) {
-                        // if already voted
-                        if (resp.data.email === 'admin@gmail.com') {
-                            history.push({
-                                pathname: "/admin",
-                                state: {
-                                    email: resp.data.email,
-                                }
-                            })
-                        }
-                        else if (resp.data.isVoted) {
-                            alert("Already Voted!!")
-                            history.push("/")
-                        } else {
-                            // if not voted send for voting 
-                            history.push({
-                                pathname: "/voting",
-                                state: { email: resp.data.email }
-                            })
-                        }
+        try {
+            const response = await axios.post(`${BASE_URI}${path}`, userDetails, { headers });
+            authenticate(response, path)
 
-                    } else {
-                        alert("Wrong Credentials")
-                        history.push("/");
-                    }
-                } else {
-                    alert(resp.data.msg)
+        } catch (error) {
+            console.log(error)
+
+        }
+        // const response = axios.post(`${BASE_URI}${path}`, userDetails, { headers })
+        //     .then(function (resp) {
+        //         console.log(typeof resp.data.status)
+        //         authenticate(resp, path)
+        //     })
+        //     .catch(e => console.log(e))
+    }
+
+    async function authenticate(resp, path) {
+        if (path === '/login') {
+            const status = await resp.data.status;
+            // check user password and username
+            if (status == 200) {
+                // check if he is admin
+                if (resp.data.email === 'admin@gmail.com') {
+                    history.push({
+                        pathname: "/admin",
+                        state: {
+                            email: resp.data.email,
+                        }
+                    })
+                }//if he is not admin check the user voter or not
+                else if (resp.data.isVoted) {
+                    alert("Already Voted!!")
                     history.push("/")
+                } else {
+                    // if he is not voted send for voting 
+                    history.push({
+                        pathname: "/voting",
+                        state: { email: resp.data.email }
+                    })
                 }
-
-            })
-            .catch(e => console.log(e))
-
-        // console.log(userDetails)
-
+                // if status code is not 200 then user entered wrong password
+            } else {
+                alert("Wrong Credentials")
+                history.push("/");
+            } //if try to access without login redirect to homepage 
+        } else {
+            alert(resp.data.msg)
+            history.push("/")
+        }
     }
 
     return (
