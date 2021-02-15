@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom';
 
 function CandidateCard({ name, image, id, email }) {
     const BASE_URI = "https://voting-web-app-server.herokuapp.com"
+    // const BASE_URI = "http://localhost:9000"
+
 
     const history = useHistory();
     console.log(email);

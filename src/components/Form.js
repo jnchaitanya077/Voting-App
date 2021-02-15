@@ -5,6 +5,8 @@ function Login({ path, name }) {
 
     const history = useHistory();
     const BASE_URI = "https://voting-web-app-server.herokuapp.com"
+    // const BASE_URI = "http://localhost:9000"
+
 
     const handleSubmit = async (event) => {
         event.preventDefault()
@@ -54,7 +56,7 @@ function Login({ path, name }) {
                 }
                 // if status code is not 200 then user entered wrong password
             } else {
-                alert("Wrong Credentials")
+                alert(resp.data.msg)
                 history.push("/");
             } //if try to access without login redirect to homepage 
         } else {

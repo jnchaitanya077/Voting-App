@@ -14,6 +14,8 @@ function VotingDisplay(props) {
     const history = useHistory();
 
     const BASE_URI = "https://voting-web-app-server.herokuapp.com"
+    // const BASE_URI = "http://localhost:9000"
+
 
 
     useEffect(() => {
@@ -44,6 +46,7 @@ function VotingDisplay(props) {
                 <div>
                     {users ? users.map((candidate) =>
                         <CandidateCard
+                            key={candidate._id}
                             name={candidate.name}
                             image={candidate.image}
                             id={candidate._id}
